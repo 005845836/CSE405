@@ -1,0 +1,22 @@
+<html>
+	<head>
+		<title>CSE 405 Review</title>
+
+<script>
+    function toggle_visibility(id) {
+       var a = document.getElementById(id);
+       if(a.style.visibility == 'hidden')
+          a.style.visibility = 'visible';
+       else
+          a.style.visibility = 'hidden';
+    }
+</script>
+	</head>
+
+<body>
+
+<a href="#" onclick="toggle_visibility('Toggle');">Click this button for visibility #toggle</a>
+<div id="Toggle">The Text is visible</div>
+
+ </body>
+</html>
