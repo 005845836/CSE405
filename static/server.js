@@ -16,7 +16,8 @@ var mounts = st({
 
 http.createServer(function(req, res) {
 	if (req.url === '/hi') { 
-	    mounts(req, res)
+	    res.set('Content-Type', 'text/html');
+	    res.send(new Buffer('<div> You Requested /hi</div>'));
 	}
 	else {
 	mount(req, res);
