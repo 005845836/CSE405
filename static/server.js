@@ -16,11 +16,12 @@ var mounts = st({
 
 http.createServer(function(req, res) {
 	if (req.url === '/hi') { 
-	    res.set('Content-Type', 'text/html');
-	    res.send(new Buffer('<div> You Requested /hi</div>'));
+		
+	   res.send("<div> You Requested /hi</div>");
+		
 	}
 	else {
 	mount(req, res);
 	}
-}).listen(8000)
+}
 
