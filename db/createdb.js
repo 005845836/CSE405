@@ -1,6 +1,9 @@
 //CreateDB.js
+//
 const pg = require('pg');
+
 process.env.PGDATABASE = 'db';
+
 const pool = new pg.Pool();
 
 pool.on('error', (err, client) => {
@@ -9,27 +12,25 @@ pool.on('error', (err, client) => {
 });
 
 pool.connect((err, client, done) => {
-  if (err) throw err; 
-  const q = 'create table users (                 ' +
-            '  username varchar(255) primary key, ' +
-            '  password varchar(255) not null,    ' +
-	    '  color char(6), 			  ' +
-	    '  para varchar(255) not null         ' + 
-            ')                                    ' ;
+  if (err) throw err;
+  const q = ' create table users (                 ' +
+            ' username varchar(255) primary key,   ' +
+            ' password varchar(255) not null,      ' +
+            ' color char(6),                       ' +
+            ' paragraph varchar(255)               ' +
+            ');                                     ';
   client.query(q, (err) => {
-    if (err) throw err; 
+    if (err) throw err;
     insertUser(client, done);
   });
 });
 
-function insertUser(client, done) {
-   const q = "insert into users values ('fred', '1234', '0000FF', 'para')";
-   client.query(q, (err) => {
-	if (err) throw err; 
-	done();
-	pool.end();
-});
+
+function insertUser(client, username, password, color, paragraph, cb) {
+  const q = "insert into users values ('fred', '1234', '0000FF', '')";
+  client.query(q, (err) => {
+  if (err) throw err;
+  pool.end();
+  });
 }
-
-
 

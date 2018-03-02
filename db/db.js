@@ -1,6 +1,9 @@
 //db.js
+//
 const pg = require('pg');
+
 process.env.PGDATABASE = 'db';
+
 const pool = new pg.Pool();
 
 pool.on('error', (err, client) => {
@@ -11,8 +14,7 @@ pool.on('error', (err, client) => {
 function getUser(username, password, cb) {
   pool.connect((err, client, done) => {
     if (err) throw err;
-    const q = "select color from users " +
-              "where username=$1::text and password=$2::text";
+    const q = "select color from users " + "where username=$1::text and password=$2::text";
     const params = [username, password];
     client.query(q, params, (err, result) => {
       if (err) {
@@ -30,9 +32,9 @@ function getUser(username, password, cb) {
     });
   });
 }
- 
-function getUserColor(username, cb) { 
- pool.connect((err, client, done) => {
+
+function getUserColor(username, cb) {
+  pool.connect((err, client, done) => {
     if (err) throw err;
     const q = "select color from users where username=$1::text";
     const params = [username];
@@ -45,13 +47,49 @@ function getUserColor(username, cb) {
       } else {
         const row = result.rows[0];
         cb(row['color']);
+
       }
       done();
     });
   });
 }
- 
-function setUserColor(username, color, cb) { 
+
+function getUserParagraph(username, cb) {
+  pool.connect((err, client, done) => {
+    if (err) throw err;
+    const q = "select paragraph from users where username=$1::text";
+    const params = [username];
+    client.query(q, params, (err, result) => {
+      if (err) {
+        console.log(err.stack);
+        cb(null);
+      } else if (result.rows.length === 0) {
+          cb(null);
+      } else {
+          const row = result.rows[0];
+          cb(row['paragraph']);
+      }
+      done();
+    });
+  });
+}
+
+function setUserParagraph(username, paragraph, cb) {
+  pool.connect((err, client, done) => {
+    if (err) throw error;
+    const q = "update users set paragraph=$1::text where username=$2::text";
+    const params = [paragraph, username];
+    client.query(q, params, (err, result) => {
+      if (err) {
+        console.log(err.stack);
+      } 
+      done();
+      cb();
+    });
+  });
+}
+
+function setUserColor(username, color, cb) {
   pool.connect((err, client, done) => {
     if (err) throw err;
     const q = "update users set color=$1::text where username=$2::text";
@@ -59,56 +97,15 @@ function setUserColor(username, color, cb) {
     client.query(q, params, (err, result) => {
       if (err) {
         console.log(err.stack);
-       }
-        done();
-	cb();
-    });
-  });
-}
-
-/* 
-function setUserPara(username, para, cb) { 
- pool.connect((err, client, done) => {
-    if (err) throw err;
-    const q = "update users set para=$1::text where username=$2::text";
-    const params = [para, username];
-    client.query(q, params, (err, result) => {
-      if (err) {
-        console.log(err.stack);
-        cb(null);
-        } else {
-        const row = result.rows[0];
-        cb(row['para']);
       }
       done();
+      cb();
     });
   });
 }
-*/
-/*
-function setUserPara(username, para, cb) { 
-  pool.connect((err, client, done) => {
-    if (err) throw err;
-    const q = "update users set para=$1::text where username=$2::text";
-    const params = [para, username];
-    client.query(q, params, (err, result) => {
-      if (err) {
-        console.log(err.stack);
-       }else{
-  	 cb({
-            para: row['para']
-  });
- }
-        done();
-  });
- });
-}
 
-*/
-
-
-exports.getUser 	= getUser; 
-exports.getUserColor    = getUserColor; 
-exports.setUserColor    = setUserColor;
-//exports.getUserPara	= getUserPara;
-//exports.setUserPara	= setUserPara;
+exports.getUser          = getUser;
+exports.getUserColor     = getUserColor;
+exports.setUserColor     = setUserColor;
+exports.setUserParagraph = setUserParagraph;
+exports.getUserParagraph = getUserParagraph;

@@ -4,16 +4,16 @@
   <a href="color.html">Pick color</a>
 </p>
 
-<p style="para: ##para#>
-
-<form action="para" target="result2" method="get" id="myForm">
+<form method="POST" action="/paragraph">
+  <textarea value="" rows="20" cols="25" maxlength="90" name="paragraph">
+          #Text Goes Here#
+  </textarea>
+  <br>
 <input type="submit" value="Submit">
 </form>
-<p>Result:</p>
-<iframe name="result2" style="height:100px;width:200px;"></iframe>
 
-<form method ="POST" action="/logout">
-  <input type="submit" value="logout" /> 
+
+
+<form method="POST" action="logout">
+  <input type="submit" value="Logout" />
 </form>
-
-
