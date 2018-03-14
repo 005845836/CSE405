@@ -1,0 +1,12 @@
+<div style="float: left">
+    | <a href="/">back to home</a> | <a href="/users_list">back to users list</a> |
+</div>
+<br><br>
+
+Account editing page for <b>#username#</b>:
+<form action="/account/edit" method="post">
+    password: <input type="text" name="password" size="32" value="#password#" />
+    <br>
+    <input type="hidden" name="username" value="#username#">
+    <input type="submit" value="Edit Account" />
+</form>
